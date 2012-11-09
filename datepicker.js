@@ -112,7 +112,7 @@
 			if (month < 11) {
 				var nextMonthNr = month + 1;
 			} else {
-				var nextMonthNr = 1;
+				var nextMonthNr = 0;
 			}
 
 			var beginMonth = new Date(year, month, 1,0,0,0,0);
