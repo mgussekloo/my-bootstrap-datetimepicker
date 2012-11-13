@@ -4,7 +4,7 @@ My bootstrap date/time picker
 A simple, no-frills date/time picker for use with Twitter Bootstrap. Based on the work of
 Stefan Petre, who made a wonderful datepicker. I merely added some features (customizable names of weekdays and months for international use, support for date/time).
 
-![Datepicker screenshot](https://raw.github.com/mgussekloo/my-bootstrap-datetimepicker/master/datepicker.png)
+![Datepicker screenshot](https://raw.github.com/mgussekloo/my-bootstrap-datetimepicker/master/screenshot/datepicker.png)
 
 Use
 -------
