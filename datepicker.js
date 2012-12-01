@@ -19,7 +19,7 @@
 							.appendTo('body')
 							.on({
 								click: $.proxy(this.click, this),
-								mousedown: $.proxy(this.mousedown, this)
+								mousedown: $.proxy(this.click, this)
 							});
 
 		this.element.on({
@@ -46,7 +46,7 @@
 			this.height = this.element.outerHeight();
 			this.place();
 			$(window).on('resize', $.proxy(this.place, this));
-			if (e ) {
+			if (e) {
 				e.stopPropagation();
 				e.preventDefault();
 			}
@@ -60,7 +60,6 @@
 		hide: function(){
 			this.picker.hide();
 			$(window).off('resize', this.place);
-			//this.setValue();
 		},
 
 		setValue: function() {
@@ -229,10 +228,7 @@
 			}
 		},
 
-		mousedown: function(e){
-			e.stopPropagation();
-			e.preventDefault();
-		},
+
 
 	};
 
