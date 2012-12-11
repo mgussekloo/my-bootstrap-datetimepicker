@@ -15,26 +15,22 @@
 		this.months = options.months||["january","february","march","april","may","june","july","august","september","october","november","december"];
 
 		this.format = options.format||$(element).data("datepicker-format")||'mm/dd/yyyy hh:ii:ss';
-		this.picker = $(DPGlobal.template)
-							.appendTo('body')
-							.on({
-								click: $.proxy(this.click, this),
-								mousedown: $.proxy(this.click, this)
-							});
-
-		this.element.on({
-			focus: $.proxy(this.show, this),
-			click: $.proxy(this.show, this),
-			blur: $.proxy(this.hide, this),
+		this.picker = $(DPGlobal.template).appendTo("body").on({
+			mousedown: $.proxy(this.click, this)
 		});
 
 		this.weekStart = options.weekStart||0;
 		this.weekEnd = this.weekStart == 0 ? 6 : this.weekStart - 1;
 		this.head();
-		if (!this.element.prop('value')) {
-			this.element.prop('value',DPGlobal.formatDate(new Date(), this.format));
+		if (!this.element.prop("value")) {
+			this.element.prop("value",DPGlobal.formatDate(new Date(), this.format));
 		}
 		this.update();
+
+		this.element.on({
+			focus: $.proxy(this.show, this),
+			click: $.proxy(this.show, this),
+		});
 	};
 
 	Datepicker.prototype = {
@@ -45,26 +41,28 @@
 			this.picker.show();
 			this.height = this.element.outerHeight();
 			this.place();
-			$(window).on('resize', $.proxy(this.place, this));
+			$(window).on("resize", $.proxy(this.place, this));
 			if (e) {
 				e.stopPropagation();
 				e.preventDefault();
 			}
 			this.element.trigger({
-				type: 'show',
+				type: "show",
 				date: this.date
 			});
-
+			$("body").on("click.bs-sc-datepicker", $.proxy(this.hide, this));
 		},
 
-		hide: function(){
+		hide: function(e){
+			if (e && $(e.target).parents(".bs-sc-datepicker").length) return false;
 			this.picker.hide();
-			$(window).off('resize', this.place);
+			$(window).off("resize", this.place);
+			$("body").off("click.bs-sc-datepicker");
 		},
 
 		setValue: function() {
 			var formated = DPGlobal.formatDate(this.date, this.format);
-			this.element.prop('value', formated);
+			this.element.prop("value", formated);
 		},
 
 		place: function(){
@@ -76,7 +74,7 @@
 		},
 
 		update: function(){
-			this.date = DPGlobal.parseDate(this.element.prop('value'), this.format);
+			this.date = DPGlobal.parseDate(this.element.prop("value"), this.format);
 			this.viewDate = new Date(this.date);
 			this.fill();
 		},
@@ -88,7 +86,7 @@
 				html += '<th class="dow">'+this.days[(dowCnt++)%7]+'</th>';
 			}
 			html += '</tr>';
-			this.picker.find('.datepicker-days thead').append(html);
+			this.picker.find(".datepicker-days thead").append(html);
 		},
 
 		fill: function() {
@@ -170,7 +168,6 @@
 
 			headerStr = this.months[this.viewDate.getMonth()] + ' ' + this.viewDate.getFullYear();
 			this.picker.find('.datepicker-days thead .monthname').html(headerStr);
-
 		},
 
 		click: function(e) {
@@ -178,7 +175,9 @@
 			e.preventDefault();
 			var target = $(e.target).closest('span, td, th');
 			if (target.length == 1) {
+
 				switch(target[0].nodeName.toLowerCase()) {
+
 					case 'th':
 						switch(target[0].className) {
 							case 'prev':
@@ -226,9 +225,8 @@
 						break;
 				}
 			}
+			return false;
 		},
-
-
 
 	};
 
