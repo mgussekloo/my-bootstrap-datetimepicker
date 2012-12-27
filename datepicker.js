@@ -22,7 +22,6 @@
 		this.weekStart = options.weekStart||0;
 		this.weekEnd = this.weekStart == 0 ? 6 : this.weekStart - 1;
 		this.head();
-		console.log(options);
 		if (!this.element.prop("value")&&!options.noDefault) {
 			this.element.prop("value",DPGlobal.formatDate(new Date(), this.format));
 		}
