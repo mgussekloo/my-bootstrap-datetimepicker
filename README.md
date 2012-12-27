@@ -13,6 +13,7 @@ Programmatically:
 
 ```javascript
 $("input").datepicker({
+	noDefault: false,
 	format: 'mm/dd/yyyy hh:ii:ss',
 	weekStart: 1,
 	days: ["zo","ma","di","wo","do","vr","za"],
