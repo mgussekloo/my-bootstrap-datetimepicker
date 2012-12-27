@@ -22,7 +22,8 @@
 		this.weekStart = options.weekStart||0;
 		this.weekEnd = this.weekStart == 0 ? 6 : this.weekStart - 1;
 		this.head();
-		if (!this.element.prop("value")) {
+		console.log(options);
+		if (!this.element.prop("value")&&!options.noDefault) {
 			this.element.prop("value",DPGlobal.formatDate(new Date(), this.format));
 		}
 		this.update();
@@ -347,6 +348,7 @@
 
 $(function() {
 	$("input[data-datepicker-format]").datepicker({
+		//noDefault: true,
 		weekStart: 1,
 		days: ["zo","ma","di","wo","do","vr","za"],
 		months: ["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"]
