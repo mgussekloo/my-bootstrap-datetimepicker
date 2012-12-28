@@ -13,7 +13,7 @@ Programmatically:
 
 ```javascript
 $("input").datepicker({
-	noDefault: false,
+	noDefault: false, // set this to true if you don't want the current date inserted if the value-attribute is empty
 	format: 'mm/dd/yyyy hh:ii:ss',
 	weekStart: 1,
 	days: ["zo","ma","di","wo","do","vr","za"],
@@ -24,5 +24,5 @@ $("input").datepicker({
 Or by using the *data-datepicker-format* attribute.
 
 ```html
-<input type="text" data-datepicker-format="dd/mm/yyyy" />
+<input type="text" data-datepicker-format="dd/mm/yyyy" data-datepicker-nodefault="false" />
 ```
