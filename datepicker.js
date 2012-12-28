@@ -13,8 +13,9 @@
 
 		this.days = options.days||["sun","mon","tue","wed","thu","fri","sat"];
 		this.months = options.months||["january","february","march","april","may","june","july","august","september","october","november","december"];
-
 		this.format = options.format||$(element).data("datepicker-format")||'mm/dd/yyyy hh:ii:ss';
+		this.noDefault = options.noDefault||$(element).data("datepicker-nodefault")||false;
+
 		this.picker = $(DPGlobal.template).appendTo("body").on({
 			mousedown: $.proxy(this.click, this)
 		});
@@ -22,14 +23,17 @@
 		this.weekStart = options.weekStart||0;
 		this.weekEnd = this.weekStart == 0 ? 6 : this.weekStart - 1;
 		this.head();
-		if (!this.element.prop("value")&&!options.noDefault) {
+
+		if (!this.element.prop("value")&&!this.noDefault) {
 			this.element.prop("value",DPGlobal.formatDate(new Date(), this.format));
 		}
+
 		this.update();
 
 		this.element.on({
 			focus: $.proxy(this.show, this),
 			click: $.proxy(this.show, this),
+			keyup: $.proxy(this.keyup, this)
 		});
 	};
 
@@ -60,7 +64,10 @@
 			$("body").off("click.bs-sc-datepicker");
 		},
 
-		setValue: function() {
+		setValue: function(val) {
+			if (typeof(val)!=='undefined') {
+				this.date = val;
+			}
 			var formated = DPGlobal.formatDate(this.date, this.format);
 			this.element.prop("value", formated);
 		},
@@ -77,6 +84,14 @@
 			this.date = DPGlobal.parseDate(this.element.prop("value"), this.format);
 			this.viewDate = new Date(this.date);
 			this.fill();
+		},
+
+		keyup: function() {
+			this.date = DPGlobal.parseDate(this.element.prop("value"), this.format);
+			this.element.trigger({
+				type: 'changeDate',
+				date: this.date
+			});
 		},
 
 		head: function(){
@@ -347,7 +362,6 @@
 
 $(function() {
 	$("input[data-datepicker-format]").datepicker({
-		//noDefault: true,
 		weekStart: 1,
 		days: ["zo","ma","di","wo","do","vr","za"],
 		months: ["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"]
